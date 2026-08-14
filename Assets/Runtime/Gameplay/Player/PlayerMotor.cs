@@ -3,18 +3,15 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMotor : MonoBehaviour
 {
-    [SerializeField] private PlayerStatsConfig _config;
     private CharacterController _characterController;
-    public PlayerStatsConfig Config => _config;
+    private PlayerStatsConfig _config;
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
-        if (_config == null)
-        {
-            Debug.LogError($"{nameof(PlayerMotor)} missing PlayerStatsConfig.", this);
-        }
     }
+
+    public void Initialize(PlayerStatsConfig config) => _config = config;
 
     public void Move(Vector3 direction)
     {

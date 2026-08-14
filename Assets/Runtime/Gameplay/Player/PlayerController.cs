@@ -1,30 +1,48 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInputReader), typeof(PlayerMotor), typeof(PlayerStats))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private PlayerInputReader _inputReader;
-    [SerializeField] private PlayerMotor _motor;
+    [Header("Config")]
+    [SerializeField] private PlayerStatsConfig _config;
 
-    private StateMachine stateMachine;
-    private PlayerIdleState idleState;
-    private PlayerMoveState moveState;
-    private PlayerDashState dashState;
+    private PlayerInputReader _inputReader;
+    private PlayerMotor _motor;
+    private PlayerStats _stats;
+    private StateMachine _stateMachine;
+    private PlayerIdleState _idleState;
+    private PlayerMoveState _moveState;
+    private PlayerDashState _dashState;
     private float _nextDashTime;
 
     public PlayerInputReader InputReader => _inputReader;
     public PlayerMotor Motor => _motor;
-    public PlayerIdleState IdleState => idleState;
-    public PlayerMoveState MoveState => moveState;
-    public PlayerDashState DashState => dashState;
+    public PlayerStatsConfig Config => _config;
+    public PlayerIdleState IdleState => _idleState;
+    public PlayerMoveState MoveState => _moveState;
+    public PlayerDashState DashState => _dashState;
     public bool CanDash => Time.time >= _nextDashTime;
 
     private void Awake()
     {
-        stateMachine = new StateMachine();
-        idleState = new PlayerIdleState(this, stateMachine);
-        moveState = new PlayerMoveState(this, stateMachine);
-        dashState = new PlayerDashState(this, stateMachine);
+        _inputReader = GetComponent<PlayerInputReader>();
+        _motor = GetComponent<PlayerMotor>();
+        _stats = GetComponent<PlayerStats>();
+
+        if (_config == null)
+        {
+            Debug.LogError($"{nameof(PlayerController)} is missing {nameof(PlayerStatsConfig)}.", this);
+            enabled = false;
+            return;
+        }
+
+        _motor.Initialize(_config);
+        _stats.Initialize(_config);
+
+        _stateMachine = new StateMachine();
+        _idleState = new PlayerIdleState(this, _stateMachine);
+        _moveState = new PlayerMoveState(this, _stateMachine);
+        _dashState = new PlayerDashState(this, _stateMachine);
     }
 
     private void OnEnable()
@@ -34,27 +52,27 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        stateMachine.Initialize(idleState);
+        _stateMachine.Initialize(_idleState);
     }
 
     private void Update()
     {
-        stateMachine.Update();
+        _stateMachine.Update();
     }
 
     #region Handle event
     private void HandleDashPressed()
     {
         if (!CanDash) return;
-        if (ReferenceEquals(stateMachine.CurrentState, dashState)) return;
-        stateMachine.ChangeState(dashState);
+        if (ReferenceEquals(_stateMachine.CurrentState, _dashState)) return;
+        _stateMachine.ChangeState(_dashState);
     }
     #endregion
 
     #region Helper
     public void StartDashCooldown()
     {
-        _nextDashTime = Time.time + _motor.Config.DashCooldown;
+        _nextDashTime = Time.time + _config.DashCooldown;
     }
     #endregion
 

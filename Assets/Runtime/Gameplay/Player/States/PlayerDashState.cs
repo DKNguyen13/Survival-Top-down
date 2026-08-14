@@ -14,7 +14,7 @@ public class PlayerDashState : IState
         _player = player;
         _stateMachine = stateMachine;
         _motor = player.Motor;
-        _config = _motor.Config;
+        _config = player.Config;
     }
 
     public void Enter()

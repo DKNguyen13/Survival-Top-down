@@ -2,7 +2,6 @@ public class EnemyAttackState : IState
 {
     private readonly EnemyController _enemy;
     private readonly StateMachine _stateMachine;
-    private bool _hasAttacked;
 
     public EnemyAttackState(EnemyController enemy, StateMachine stateMachine)
     {
@@ -12,7 +11,7 @@ public class EnemyAttackState : IState
 
     public void Enter()
     {
-        _hasAttacked = false;
+        
     }
 
     public void Update()
@@ -23,20 +22,16 @@ public class EnemyAttackState : IState
             return;
         }
 
-        if (!_hasAttacked)
+        // Chase State locked the attack direction when it entered this state.
+        // The player can avoid the hit by leaving the range or cone before this frame.
+        if (_enemy.Attack.TryAttack(_enemy.Target, _enemy.TargetDamageable))
         {
-            _enemy.Motor.FaceTarget(_enemy.Target.position);
-            bool attacked = _enemy.Attack.TryAttack(_enemy.Target, _enemy.TargetDamageable);
-            _hasAttacked = true;
-
-            if (!attacked)
-            {
-                _stateMachine.ChangeState(_enemy.ChaseState);
-            }
-            return;
+            _stateMachine.ChangeState(_enemy.RecoveryState);
         }
-
-        _stateMachine.ChangeState(_enemy.RecoveryState);
+        else
+        {
+            _stateMachine.ChangeState(_enemy.ChaseState);
+        }
     }
 
     public void Exit()

@@ -15,4 +15,7 @@ MonoBehaviour:
   _maxHealth: 220
   _moveSpeed: 3
   _attackRange: 1.3
+  _attackDamage: 30
+  _attackAngle: 50
   _recoveryDuration: 1
+  _experienceReward: 30

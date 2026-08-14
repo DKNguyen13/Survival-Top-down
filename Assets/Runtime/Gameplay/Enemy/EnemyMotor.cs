@@ -1,8 +1,15 @@
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class EnemyMotor : MonoBehaviour
 {
+    private CharacterController _characterController;
     private EnemyStatsConfig _config;
+
+    private void Awake()
+    {
+        _characterController = GetComponent<CharacterController>();
+    }
 
     public void Initialize(EnemyStatsConfig config) => _config = config;
 
@@ -13,7 +20,7 @@ public class EnemyMotor : MonoBehaviour
 
         if (direction.sqrMagnitude <= .001f) return;
         direction.Normalize();
-        transform.position += direction * _config.MoveSpeed * Time.deltaTime;
+        _characterController.Move(direction * _config.MoveSpeed * Time.deltaTime);
         FaceDirection(direction);
     }
 

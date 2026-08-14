@@ -21,13 +21,14 @@ public class MeleeEnemyAttack : EnemyAttack
         // Skip if target is outside the attack cone
         if (angle > halfAttackAngle) return false;
 
+#if UNITY_EDITOR
         Debug.Log($"[MELEE HIT] time={Time.time:F3} " +
         $"damage={Config.AttackDamage} " +
         $"distance={Mathf.Sqrt(toTarget.sqrMagnitude):F2} " +
         $"angle={angle:F1}",
         this);
+#endif
 
-        // Take dmg
         damageable.TakeDamage(Config.AttackDamage);
         return true;
     }

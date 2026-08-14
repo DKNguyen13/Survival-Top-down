@@ -164,7 +164,6 @@ GameObject:
   - component: {fileID: 111201409}
   - component: {fileID: 111201412}
   - component: {fileID: 111201411}
-  - component: {fileID: 111201410}
   m_Layer: 0
   m_Name: StaminaBar
   m_TagString: Untagged
@@ -192,19 +191,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &111201410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 111201408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 673cb935be541254e8195a3460d22c5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fill: {fileID: 715363247}
 --- !u!114 &111201411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,14 +605,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 425896484}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: -0, y: 7, z: -8}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 9, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 822865596}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!1 &649898361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,7 +995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 7, z: -8}
+  m_FollowOffset: {x: 0, y: 9, z: -8}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -1140,7 +1126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673cb935be541254e8195a3460d22c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fill: {fileID: 1772631234}
+  _fill: {fileID: 1772631233}
+  _duration: 0.2
 --- !u!114 &958288587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1265,8 +1252,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: 0, y: 7, z: -8}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 9, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1556,7 +1543,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673cb935be541254e8195a3460d22c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fill: {fileID: 236619612}
+  _fill: {fileID: 236619611}
+  _duration: 0.2
 --- !u!114 &1171856454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2367,11 +2355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502ac720645e1e94aa103eeadfec7984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stats: {fileID: 1908370422}
-  _expToLevelUp: 100
-  _healthPerLevel: 40
-  _armorPerLevel: 2
-  _damageMultiplierPerLevel: 0.1
 --- !u!1 &1912841290
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,14 +3,16 @@ using UnityEngine;
 public class EnemyChaseState : IState
 {
     private readonly EnemyController _enemy;
+    private readonly StateMachine _stateMachine;
     private readonly EnemyMotor _motor;
     private readonly EnemyStatsConfig _config;
 
     public EnemyChaseState(EnemyController enemy, StateMachine stateMachine)
     {
         _enemy = enemy;
+        _stateMachine = stateMachine;
         _motor = enemy.Motor;
-        _config = _motor.Config;
+        _config = enemy.Config;
     }
 
     public void Enter()
@@ -29,7 +31,7 @@ public class EnemyChaseState : IState
         if (difference.sqrMagnitude <= attackRangeSqr)
         {
             _motor.FaceTarget(_enemy.Target.position);
-            // Attack state
+            _stateMachine.ChangeState(_enemy.AttackState);
             return;
         }
 

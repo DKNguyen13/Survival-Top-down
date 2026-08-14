@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class EnemyMotor : MonoBehaviour
 {
-    [SerializeField] private EnemyStatsConfig _config;
-    public EnemyStatsConfig Config => _config;
+    private EnemyStatsConfig _config;
+
+    public void Initialize(EnemyStatsConfig config) => _config = config;
 
     public void MoveTowards(Vector3 targetPosition)
     {

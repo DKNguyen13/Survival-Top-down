@@ -41,6 +41,7 @@ public class PlayerProjectile : MonoBehaviour
 
         // VFX
         PrototypeEffects.PlayHit(transform.position, new Color(1f, 0.8f, 0.2f));
+        AudioManager.PlaySfx(SfxId.PlayerBulletHit, transform.position);
 
         // Return to pool
         ObjectPooling.Instance.ReturnToPool(PoolType.PlayerBullet, gameObject);

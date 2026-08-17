@@ -54,6 +54,7 @@ public class PlayerSkills : MonoBehaviour
         SpawnProjectile(0f);
         SpawnProjectile(_config.SpreadAngle);
         PrototypeEffects.PlayHit(_firePoint.position, new Color(0.1f, 0.9f, 1f));
+        AudioManager.PlaySfx(SfxId.PlayerShoot, _firePoint.position);
 
         ShootCharges--;
         _nextShotTime = Time.time + _config.ShotInterval;
@@ -71,6 +72,7 @@ public class PlayerSkills : MonoBehaviour
         GameObject bombObject = ObjectPooling.Instance.GetFromPool(PoolType.Bomb, transform.position, Quaternion.identity);
         PlayerBomb bomb = bombObject.GetComponent<PlayerBomb>();
         bomb.Setup(_stats.GetOutgoingDamage(_config.BombDamage), _config.BombDelay, _config.BombRadius, _enemyMask);
+        AudioManager.PlaySfx(SfxId.BombPlace, transform.position);
         _nextBombTime = Time.time + _config.BombCooldown;
     }
 

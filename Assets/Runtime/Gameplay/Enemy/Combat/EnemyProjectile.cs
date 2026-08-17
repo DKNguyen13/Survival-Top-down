@@ -35,7 +35,12 @@ public class EnemyProjectile : MonoBehaviour
         PlayerStats player = other.GetComponentInParent<PlayerStats>();
         if (player == null) return;
         player.ApplyPoison(_poisonDamage, _poisonDuration);
+        
+        // VFX and audio
         PrototypeEffects.PlayHit(transform.position, new Color(0.45f, 1f, 0.2f));
+        AudioManager.PlaySfx(SfxId.PoisonHit, transform.position);
+        
+        // Return to pool
         ObjectPooling.Instance.ReturnToPool(PoolType.EnemyBullet, gameObject);
     }
 }

@@ -24,8 +24,9 @@ public class RangedEnemyAttack : EnemyAttack
         EnemyProjectile enemyProjectile = enemyBulletGO.GetComponent<EnemyProjectile>();
         enemyProjectile.Setup(direction, Config);
 
-        // VFX
+        // VFX and Audio
         PrototypeEffects.PlayHit(_firePoint.position, new Color(0.35f, 1f, 0.12f));
+        AudioManager.PlaySfx(SfxId.PoisonShoot, _firePoint.position);
         return true;
     }
 }

@@ -24,6 +24,7 @@ public class PlayerDashState : IState
 
         // VFX
         PrototypeEffects.PlayDash(_player.transform.position, _dashDirection, new Color(0.2f, 0.85f, 1f));
+        //AudioManager.PlaySfx(SfxId.Dash, _player.transform.position);
     }
 
     public void Update()

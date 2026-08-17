@@ -42,6 +42,7 @@ public class PlayerStats : MonoBehaviour, IDamageable
         if (finalDamage <= 0f) return;
         CurrentHealth = Mathf.Max(0f, CurrentHealth - finalDamage);
         HealthChanged?.Invoke(CurrentHealth, MaxHealth);
+        //AudioManager.PlaySfx(SfxId.PlayerHurt, transform.position);
         
         Debug.Log($"Player took {finalDamage} damage. HP: {CurrentHealth}/{MaxHealth}", this);
 

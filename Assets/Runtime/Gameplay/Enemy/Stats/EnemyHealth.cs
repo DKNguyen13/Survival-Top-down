@@ -40,6 +40,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     private void Die()
     {
+        //AudioManager.PlaySfx(SfxId.EnemyDeath, transform.position);
         Died?.Invoke(this);
     }
 }

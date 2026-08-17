@@ -28,7 +28,9 @@ public class MeleeEnemyAttack : EnemyAttack
         $"angle={angle:F1}", this);
 #endif
 
+        // VFX and audio
         PrototypeEffects.PlayMeleeAttack(transform.position, transform.forward, new Color(1f, 0.25f, 0.08f));
+        AudioManager.PlaySfx(SfxId.MeleeAttack, transform.position);
 
         damageable.TakeDamage(Config.AttackDamage);
         PrototypeEffects.PlayHit(target.position + Vector3.up * 0.8f, new Color(1f, 0.18f, 0.08f));

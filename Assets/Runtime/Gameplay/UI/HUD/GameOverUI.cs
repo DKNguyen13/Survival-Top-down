@@ -28,11 +28,10 @@ public sealed class GameOverUI : MonoBehaviour
 
     private void Show()
     {
-        _resultText.text =
-            $"LEVEL  {_progression.Level}\nWAVE  {_waves.Wave}";
-
+        _resultText.text = $"LEVEL  {_progression.Level}\nWAVE  {_waves.Wave}";
         _panel.interactable = true;
         _panel.blocksRaycasts = true;
+        AudioManager.PlayUI(SfxId.GameOver);
 
         if (_showRoutine != null) StopCoroutine(_showRoutine);
         _showRoutine = StartCoroutine(FadeIn());

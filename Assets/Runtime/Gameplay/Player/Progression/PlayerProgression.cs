@@ -42,6 +42,7 @@ public class PlayerProgression : MonoBehaviour
 
         // VFX
         PrototypeEffects.PlayLevelUp(transform.position, new Color(1f, 0.85f, 0.15f));
+        AudioManager.PlayUI(SfxId.LevelUp);
         
         LevelChanged?.Invoke(Level);
     }

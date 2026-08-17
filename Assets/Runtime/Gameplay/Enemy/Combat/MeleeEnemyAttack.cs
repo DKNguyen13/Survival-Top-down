@@ -25,11 +25,11 @@ public class MeleeEnemyAttack : EnemyAttack
         Debug.Log($"[MELEE HIT] time={Time.time:F3} " +
         $"damage={Config.AttackDamage} " +
         $"distance={Mathf.Sqrt(toTarget.sqrMagnitude):F2} " +
-        $"angle={angle:F1}",
-        this);
+        $"angle={angle:F1}", this);
 #endif
 
         damageable.TakeDamage(Config.AttackDamage);
+        PrototypeEffects.PlayHit(target.position + Vector3.up * 0.8f, new Color(1f, 0.18f, 0.08f));
         return true;
     }
 }

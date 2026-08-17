@@ -6,9 +6,7 @@ public class EnemyController : MonoBehaviour
     [Header("Config")]
     [SerializeField] private EnemyStatsConfig _config;
 
-    [Header("Debug / Scene Setup")]
-    [SerializeField] private Transform _target;
-
+    private Transform _target;
     private EnemyMotor _motor;
     private EnemyAttack _attack;
     private EnemyHealth _health;
@@ -17,15 +15,6 @@ public class EnemyController : MonoBehaviour
     private EnemyAttackState _attackState;
     private EnemyRecoveryState _recoveryState;
     private IDamageable _targetDamageable;
-
-    public EnemyMotor Motor => _motor;
-    public EnemyAttack Attack => _attack;
-    public EnemyStatsConfig Config => _config;
-    public Transform Target => _target;
-    public IDamageable TargetDamageable => _targetDamageable;
-    public EnemyChaseState ChaseState => _chaseState;
-    public EnemyAttackState AttackState => _attackState;
-    public EnemyRecoveryState RecoveryState => _recoveryState;
 
     private void Awake()
     {
@@ -58,7 +47,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        _stateMachine.Update();
+        if (_health.IsAlive) _stateMachine.Update();
     }
 
     public void Initialize(Transform target)
@@ -79,4 +68,15 @@ public class EnemyController : MonoBehaviour
 
         _targetDamageable = _target.GetComponent<IDamageable>();
     }
+
+    // Getter, Setter
+    public EnemyMotor Motor => _motor;
+    public EnemyAttack Attack => _attack;
+    public EnemyHealth Health => _health;
+    public EnemyStatsConfig Config => _config;
+    public Transform Target => _target;
+    public IDamageable TargetDamageable => _targetDamageable;
+    public EnemyChaseState ChaseState => _chaseState;
+    public EnemyAttackState AttackState => _attackState;
+    public EnemyRecoveryState RecoveryState => _recoveryState;
 }

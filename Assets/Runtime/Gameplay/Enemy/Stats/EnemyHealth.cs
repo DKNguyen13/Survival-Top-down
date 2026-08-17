@@ -41,6 +41,5 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private void Die()
     {
         Died?.Invoke(this);
-        gameObject.SetActive(false);
     }
 }

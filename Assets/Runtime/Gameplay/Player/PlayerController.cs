@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputReader), typeof(PlayerMotor), typeof(PlayerStats))]
+[RequireComponent(typeof(PlayerSkills), typeof(PlayerProgression))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Config")]
@@ -9,25 +10,20 @@ public class PlayerController : MonoBehaviour
     private PlayerInputReader _inputReader;
     private PlayerMotor _motor;
     private PlayerStats _stats;
+    private PlayerSkills _skills;
+    private PlayerProgression _progression;
     private StateMachine _stateMachine;
     private PlayerIdleState _idleState;
     private PlayerMoveState _moveState;
     private PlayerDashState _dashState;
-    private float _nextDashTime;
-
-    public PlayerInputReader InputReader => _inputReader;
-    public PlayerMotor Motor => _motor;
-    public PlayerStatsConfig Config => _config;
-    public PlayerIdleState IdleState => _idleState;
-    public PlayerMoveState MoveState => _moveState;
-    public PlayerDashState DashState => _dashState;
-    public bool CanDash => Time.time >= _nextDashTime;
 
     private void Awake()
     {
         _inputReader = GetComponent<PlayerInputReader>();
         _motor = GetComponent<PlayerMotor>();
         _stats = GetComponent<PlayerStats>();
+        _skills = GetComponent<PlayerSkills>();
+        _progression = GetComponent<PlayerProgression>();
 
         if (_config == null)
         {
@@ -38,6 +34,8 @@ public class PlayerController : MonoBehaviour
 
         _motor.Initialize(_config);
         _stats.Initialize(_config);
+        _skills.Initialize(_config, _stats, _inputReader);
+        _progression.Initialize(_config, _stats);
 
         _stateMachine = new StateMachine();
         _idleState = new PlayerIdleState(this, _stateMachine);
@@ -63,16 +61,24 @@ public class PlayerController : MonoBehaviour
     #region Handle event
     private void HandleDashPressed()
     {
-        if (!CanDash) return;
         if (ReferenceEquals(_stateMachine.CurrentState, _dashState)) return;
+        if (!_skills.TryStartDash()) return;
         _stateMachine.ChangeState(_dashState);
     }
-    #endregion
 
-    #region Helper
-    public void StartDashCooldown()
+    public void PressShootUI()
     {
-        _nextDashTime = Time.time + _config.DashCooldown;
+        InputReader.PressShoot();
+    }
+
+    public void PressBombUI()
+    {
+        InputReader.PressBomb();
+    }
+
+    public void PressDashUI()
+    {
+        InputReader.PressDash();
     }
     #endregion
 
@@ -80,4 +86,14 @@ public class PlayerController : MonoBehaviour
     {
         _inputReader.DashPressed -= HandleDashPressed;
     }
+
+    // Getter, Setter
+    public PlayerInputReader InputReader => _inputReader;
+    public PlayerMotor Motor => _motor;
+    public PlayerStatsConfig Config => _config;
+    public PlayerStats Stats => _stats;
+    public PlayerSkills Skills => _skills;
+    public PlayerIdleState IdleState => _idleState;
+    public PlayerMoveState MoveState => _moveState;
+    public PlayerDashState DashState => _dashState;
 }

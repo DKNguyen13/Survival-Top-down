@@ -5,6 +5,7 @@ public class PlayerMotor : MonoBehaviour
 {
     private CharacterController _characterController;
     private PlayerStatsConfig _config;
+    private float _verticalVelocity;
 
     private void Awake()
     {
@@ -12,6 +13,11 @@ public class PlayerMotor : MonoBehaviour
     }
 
     public void Initialize(PlayerStatsConfig config) => _config = config;
+
+    private void Update()
+    {
+        ApplyGravity();
+    }
 
     public void Move(Vector3 direction)
     {
@@ -33,5 +39,19 @@ public class PlayerMotor : MonoBehaviour
     public void DashMove(Vector3 direction, float distance)
     {
         _characterController.Move(direction * distance);
+    }
+
+    private void ApplyGravity()
+    {
+        if (_characterController.isGrounded && _verticalVelocity < 0f)
+        {
+            _verticalVelocity = -2f;
+        }
+        else
+        {
+            _verticalVelocity += Physics.gravity.y * Time.deltaTime;
+        }
+
+        _characterController.Move(Vector3.up * (_verticalVelocity * Time.deltaTime));
     }
 }

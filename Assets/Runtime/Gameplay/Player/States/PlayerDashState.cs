@@ -19,10 +19,11 @@ public class PlayerDashState : IState
 
     public void Enter()
     {
-        // Play dash animation, vfx dash
         _elapsedTime = 0f;
         _dashDirection = _player.transform.forward;
-        _player.StartDashCooldown();
+
+        // VFX
+        PrototypeEffects.PlayDash(_player.transform.position, _dashDirection, new Color(0.2f, 0.85f, 1f));
     }
 
     public void Update()
@@ -48,6 +49,7 @@ public class PlayerDashState : IState
 
     private void FinishDash()
     {
+        _player.Skills.CompleteDash(_player.transform.position);
         if (_player.InputReader.MoveInput.sqrMagnitude > 0.01f)
         {
             _stateMachine.ChangeState(_player.MoveState);

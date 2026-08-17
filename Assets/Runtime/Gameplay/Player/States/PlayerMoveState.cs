@@ -26,7 +26,6 @@ public class PlayerMoveState : IState
         }
 
         Vector3 moveDirection = new Vector3(input.x, 0f, input.y);
-        moveDirection.Normalize();
         _player.Motor.Move(moveDirection);
         _player.Motor.RotateTowards(moveDirection);
     }

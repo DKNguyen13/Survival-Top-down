@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerInputReader : MonoBehaviour
 {
     public Vector2 MoveInput { get; private set; }
+    public event Action ShootPressed;
+    public event Action BombPressed;
     public event Action DashPressed;
     private Vector2 _joystickInput;
     private bool _joystickActive;
@@ -47,14 +49,23 @@ public class PlayerInputReader : MonoBehaviour
     #endregion
 
     #region Skill Input
-    public void PressDash()
-    {
-        DashPressed?.Invoke();
-    }
+    public void PressShoot() => ShootPressed?.Invoke();
+    public void PressBomb() => BombPressed?.Invoke();
+    public void PressDash() => DashPressed?.Invoke();
 
 #if UNITY_EDITOR
     private void ReadKeyboardActions()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ShootPressed?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            BombPressed?.Invoke();
+        }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             DashPressed?.Invoke();

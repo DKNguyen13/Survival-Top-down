@@ -10,13 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf15a60a5f748a247883e84778bfd3ee, type: 3}
-  m_Name: Player_Default
+  m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   _maxHealth: 500
   _armor: 0
   _damageMultiplier: 0
   _moveSpeed: 2
   _rotationSpeed: 180
+  _shotDamage: 10
+  _shotInterval: 0.5
+  _chargeRecovery: 3
+  _maxCharges: 3
+  _spreadAngle: 15
+  _projectileSpeed: 10
+  _projectileRange: 10
+  _bombDamage: 50
+  _bombDelay: 2
+  _bombRadius: 5
+  _bombCooldown: 12
   _dashDistance: 3
   _dashDuration: 0.5
   _dashCooldown: 6
+  _dashDamage: 15
+  _dashExplosionRadius: 3
+  _experienceToLevel: 100
+  _healthPerLevel: 40
+  _armorPerLevel: 2
+  _damageMultiplierPerLevel: 0.1

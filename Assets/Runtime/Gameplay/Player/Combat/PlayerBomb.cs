@@ -17,6 +17,7 @@ public class PlayerBomb : MonoBehaviour
 
         // VFX
         PrototypeEffects.PlayBomb(transform.position, _radius, new Color(1f, 0.35f, 0.08f));
+        CameraShake.Play(transform.position, 0.7f);
 
         // Return to pool
         ObjectPooling.Instance.ReturnToPool(PoolType.Bomb, gameObject);

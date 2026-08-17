@@ -115,9 +115,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5730563787985788433}
   - component: {fileID: 6003504299944128734}
-  - component: {fileID: 2497495831681502696}
+  - component: {fileID: 5302057627681207351}
   - component: {fileID: 6177228628619694876}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CenterMark
   m_TagString: Map
   m_Icon: {fileID: 0}
@@ -147,8 +147,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505154724648264730}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!136 &2497495831681502696
-CapsuleCollider:
+--- !u!65 &5302057627681207351
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -165,11 +165,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 1.0000001, y: 1, z: 1.0000002}
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &6177228628619694876
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -28,6 +28,8 @@ public class MeleeEnemyAttack : EnemyAttack
         $"angle={angle:F1}", this);
 #endif
 
+        PrototypeEffects.PlayMeleeAttack(transform.position, transform.forward, new Color(1f, 0.25f, 0.08f));
+
         damageable.TakeDamage(Config.AttackDamage);
         PrototypeEffects.PlayHit(target.position + Vector3.up * 0.8f, new Color(1f, 0.18f, 0.08f));
         return true;

@@ -8,6 +8,7 @@ public sealed class PrototypeEffects : MonoBehaviour
         Hit,
         Bomb,
         Dash,
+        MeleeAttack,
         LevelUp,
         PoisonHit,
     }
@@ -146,6 +147,12 @@ public sealed class PrototypeEffects : MonoBehaviour
         _instance.SpawnDash(position, direction, color);
     }
 
+    public static void PlayMeleeAttack(Vector3 position, Vector3 direction, Color color)
+    {
+        if (_instance == null) return;
+        _instance.SpawnMeleeAttack(position, direction, color);
+    }
+
     public static void PlayLevelUp(Vector3 position, Color color)
     {
         if (_instance == null) return;
@@ -217,6 +224,7 @@ public sealed class PrototypeEffects : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
 
         fx.Root.transform.SetPositionAndRotation(position + Vector3.up * 0.1f, rotation);
+        fx.Root.transform.localScale = Vector3.one;
 
         SetParticleColor(fx.Sparks, Color.Lerp(Color.white, color, 0.2f));
         SetParticleColor(fx.Glints, color);
@@ -225,7 +233,27 @@ public sealed class PrototypeEffects : MonoBehaviour
 
         PlayEffect(fx, 0.65f);
     }
+    private void SpawnMeleeAttack(Vector3 position, Vector3 direction, Color color)
+    {
+        FxInstance fx = GetEffect(FxType.MeleeAttack);
 
+        direction.y = 0f;
+        if (direction.sqrMagnitude < 0.001f) direction = Vector3.forward;
+        direction.Normalize();
+
+        Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+        fx.Root.transform.SetPositionAndRotation(position + direction * 0.65f + Vector3.up * 0.5f, rotation);
+        fx.Root.transform.localScale = new Vector3(1.55f, 1.05f, 1.15f);
+
+        SetParticleColor(fx.Sparks, Color.Lerp(Color.white, color, 0.15f));
+        SetParticleColor(fx.Glints, Color.Lerp(Color.white, color, 0.25f));
+        SetParticleColor(fx.Smoke, Color.Lerp(color, Color.black, 0.2f), 0.45f);
+
+        SetupRing(fx.Rings[0], 0.1f, 1.15f, 0.11f, color, 0f, 0.28f);
+
+        PlayEffect(fx, 0.65f);
+    }
     // =========================================================
     // SPAWN LEVEL UP
     // =========================================================
@@ -251,19 +279,25 @@ public sealed class PrototypeEffects : MonoBehaviour
         FxInstance fx = GetEffect(FxType.PoisonHit);
 
         fx.Root.transform.SetPositionAndRotation(
-            position + Vector3.up * 0.35f,
+            position + Vector3.up * 0.45f,
             Quaternion.identity);
 
-        Color hot = Color.Lerp(Color.white, color, 0.35f);
-        Color toxic = Color.Lerp(color, new Color(0.65f, 1f, 0.05f), 0.25f);
-        Color darkPoison = Color.Lerp(color, new Color(0.18f, 0.04f, 0.28f), 0.4f);
+        Color toxic = Color.Lerp(
+            color,
+            new Color(0.65f, 1f, 0.05f),
+            0.35f);
 
-        SetParticleColor(fx.Sparks, toxic);
-        SetParticleColor(fx.Glints, toxic, 0.95f);
-        SetParticleColor(fx.Smoke, darkPoison, 0.3f);
-        SetParticleColor(fx.Rise, color, 0.85f);
+        Color darkPoison = Color.Lerp(
+            color,
+            new Color(0.12f, 0.02f, 0.18f),
+            0.25f);
 
-        PlayEffect(fx, 1.1f);
+        SetParticleColor(fx.Core, toxic, 1f);
+        SetParticleColor(fx.Sparks, toxic, 1f);
+        SetParticleColor(fx.Glints, toxic, 1f);
+        SetParticleColor(fx.Smoke, darkPoison, 0.8f);
+        SetParticleColor(fx.Rise, toxic, 1f);
+        PlayEffect(fx, 1.15f);
     }
 
     // =========================================================
@@ -391,6 +425,7 @@ public sealed class PrototypeEffects : MonoBehaviour
         Prewarm(FxType.Hit, 12);
         Prewarm(FxType.Bomb, 4);
         Prewarm(FxType.Dash, 6);
+        Prewarm(FxType.MeleeAttack, 6);
         Prewarm(FxType.LevelUp, 2);
         Prewarm(FxType.PoisonHit, 8);
     }
@@ -471,6 +506,10 @@ public sealed class PrototypeEffects : MonoBehaviour
                 break;
 
             case FxType.Dash:
+                BuildDash(fx);
+                break;
+
+            case FxType.MeleeAttack:
                 BuildDash(fx);
                 break;
 
@@ -621,7 +660,7 @@ public sealed class PrototypeEffects : MonoBehaviour
         noise.quality = ParticleSystemNoiseQuality.Low;
 
         SetBurst(ps, 8);
-        SetFadeCurve(ps, 0.35f, 0f);
+        SetFadeCurve(ps, 0.9f, 0f);
 
         SetSizeCurve(ps, new AnimationCurve(
             new Keyframe(0f, 0.2f),
